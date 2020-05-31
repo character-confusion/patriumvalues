@@ -141,7 +141,12 @@ stats"></a></div></noscript>
         dist += Math.pow(Math.abs(ideologies[i].stats.govt - liberty), 2)
         dist += Math.pow(Math.abs(ideologies[i].stats.dipl - peace), 1.73856063)
         dist += Math.pow(Math.abs(ideologies[i].stats.scty - progress), 1.73856063)
-        dist_dic[ideologies[i].name] = dist
+        if (ideologies[i].name in dist_dic) {
+            dist_dic[ideologies[i].name] = Math.min(dist, dist_dic[ideologies[i].name])
+        }
+        else {
+            dist_dic[ideologies[i].name] = dist
+        }
         if (dist < ideodist) {
             ideology = ideologies[i].name
             description = ideologies[i].description
@@ -152,6 +157,7 @@ stats"></a></div></noscript>
     document.getElementById("ideology-description").innerHTML = description
 
     dist_dic[ideology] = Infinity
+    console.log(dist_dic)
 
     function getNextCompatatility(dist_dic) {
         var ideology = ""
